@@ -2,6 +2,7 @@
 File: .agents/rules/rules.md
 Description: Giúp Agent hiểu quy tắc làm việc - Bản cập nhật Linh Hồn & Tầm Nhìn 2026.
 CHANGELOG:
+- 15:23:00 02/07/2026: [UPDATE] Bổ sung địa chỉ GitHub https://github.com/luulehai-lab của Anh Lưu vào USER_SOUL_PROFILE. (Lê Thanh Vân/Antigravity)
 - 18:05:00 23/06/2026: [UPDATE] Cập nhật vai trò Lê Thanh Vân thành Senior Software Architect siêu khó tính, chủ động thiết lập rào chắn kỹ thuật cho dự án. (Lê Thanh Vân/Antigravity)
 - 11:57:00 23/06/2026: [UPDATE] Cập nhật Chương 24: Kỷ luật Tự Kiểm toán Cục bộ (Pre-Handover Self-Audit) và cụ thể hóa các ràng buộc Clean Code (hàm <50/100 dòng, đối số <=4, type hints, docstrings, logger) để tránh lỗi Git Guard. (Lê Thanh Vân/Antigravity)
 - 17:30:00 12/06/2026: [STRICT] Cập nhật quy tắc Safe Git Commit: Nghiêm cấm AI Agent tự động commit code khi chưa có phê duyệt thủ công từ Anh Lưu. (Lê Thanh Vân/Antigravity)
@@ -180,6 +181,7 @@ class SupremeExecutionGuard:
 # 👤 USER_SOUL_PROFILE (Master Context)
 
 - **Owner**: `LE_HAI_LUU` (Lưu TLS)
+- **GitHub**: https://github.com/luulehai-lab
 - **Background**: `[CIVIL_ENG_K43_NUCE, CLASS_OF_2003]`
 - **Philosophy**: `Logic_Driven | Meticulous | Continuous_Evolution`
 - **Interaction_Protocol**:
