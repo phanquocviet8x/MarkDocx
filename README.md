@@ -1,28 +1,40 @@
-# 👁️ Advanced Markdown Viewer & Document Compiler (Offline-First)
+# MarkDocx - Advanced Markdown Viewer & Document Compiler (Offline-First)
 
-Chào mừng bạn đến với **Advanced Markdown Viewer** – Giải pháp số hóa tài liệu và biên dịch báo cáo kỹ thuật Markdown chuyên nghiệp, tối ưu hóa cho tốc độ, khả năng vận hành Offline tuyệt đối và xuất bản tài liệu chuẩn công nghiệp.
+<p align="center">
+  <img src="logo.png" alt="MarkDocx Logo" width="180"/>
+</p>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/python-3.10+-blue.svg"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python Version"/></a>
+  <a href="https://img.shields.io/badge/UI-PyQt6-orange.svg"><img src="https://img.shields.io/badge/UI-PyQt6-orange.svg" alt="UI PyQt6"/></a>
+  <a href="https://img.shields.io/badge/compiler-Pandoc-green.svg"><img src="https://img.shields.io/badge/compiler-Pandoc-green.svg" alt="Compiler Pandoc"/></a>
+  <a href="https://img.shields.io/badge/Mermaid-Offline-blueviolet.svg"><img src="https://img.shields.io/badge/Mermaid-Offline-blueviolet.svg" alt="Mermaid Offline"/></a>
+  <a href="https://img.shields.io/badge/license-MIT-blue.svg"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License MIT"/></a>
+</p>
+
+**MarkDocx** là trình biên dịch tài liệu (Document Compiler) và xem thử Markdown đa luồng nâng cao. Được thiết kế chuyên dụng cho kỹ sư kết cấu, nhà phát triển và soạn thảo báo cáo kỹ thuật với khả năng render biểu đồ Mermaid, công thức toán học MathJax hoàn toàn **Offline** và xuất bản tài liệu Microsoft Word (.docx) chất lượng cao.
 
 ---
 
-## 🌟 Tại sao dự án này vượt trội hơn phần còn lại?
+## 🌟 Tại sao MarkDocx vượt trội hơn các trình đọc Markdown khác?
 
-Giữa hàng trăm trình đọc Markdown trên GitHub và Internet, **Advanced Markdown Viewer** được thiết kế để giải quyết những "nỗi đau" lớn nhất của kỹ sư và nhà phát triển khi làm việc với tài liệu phức tạp:
+Giữa hàng trăm trình đọc Markdown trên GitHub và Internet, **MarkDocx** nổi bật nhờ việc giải quyết triệt để những "nỗi đau" kỹ thuật lớn nhất khi biên dịch tài liệu phức tạp:
 
-### 1. 🚀 Trình Render Mermaid Headless Offline (Độc Quyền)
+### 1. 🚀 Headless Mermaid.js Compiler (Độc quyền & Trực quan)
 * **Vấn đề của các công cụ khác**: Hầu hết các trình xem Markdown chỉ có thể render biểu đồ Mermaid.js trên trình duyệt web hiển thị (giao diện). Khi bạn muốn xuất file sang PDF hoặc Word, các khối Mermaid sẽ bị giữ nguyên dưới dạng mã code thô hoặc bị lỗi hiển thị.
-* **Giải pháp của chúng tôi**: Tích hợp một bộ **Headless Renderer** sử dụng trình duyệt ảo ngầm (`QWebEngineView` ẩn) để tự động biên dịch mã Mermaid sang ảnh PNG thực tế ở độ phân giải gốc, sau đó tự động nhúng vào tài liệu trước khi xuất bản. Tất cả diễn ra **100% Offline**.
+* **Giải pháp của MarkDocx**: Tích hợp một bộ **Headless Renderer** sử dụng trình duyệt ảo ngầm (`QWebEngineView` ẩn) để tự động biên dịch mã Mermaid sang ảnh PNG thực tế ở độ phân giải gốc, sau đó tự động nhúng vào tài liệu trước khi xuất bản. Tất cả diễn ra **100% Offline**.
 
-### 2. 🧮 MathJax Offline (tex-svg) – Công thức toán học không cần mạng
+### 🧮 2. MathJax Offline (tex-svg) – Công thức toán học không cần mạng
 * **Vấn đề của các công cụ khác**: Đa số các trình đọc Markdown dựa vào các thư viện CDN online (như MathJax/KaTeX qua internet) để hiển thị công thức toán học. Nếu mất mạng, tài liệu của bạn sẽ bị lỗi hiển thị công thức.
-* **Giải pháp của chúng tôi**: Đóng gói sẵn thư viện MathJax (tex-svg) nội bộ. Cho phép render các công thức LaTeX phức tạp (cả inline `$` và block `$$`) hoàn hảo ngay cả khi máy tính của bạn hoàn toàn ngắt kết nối internet.
+* **Giải pháp của MarkDocx**: Đóng gói sẵn thư viện MathJax (tex-svg) nội bộ. Cho phép render các công thức LaTeX phức tạp (cả inline `$` và block `$$`) hoàn hảo ngay cả khi máy tính của bạn hoàn toàn ngắt kết nối internet.
 
-### 3. 📝 Bộ dịch LaTeX-to-Unicode thông minh khi xuất DOCX
+### 📝 3. Bộ dịch LaTeX-to-Unicode thông minh khi xuất DOCX
 * Khi xuất tài liệu sang định dạng Microsoft Word (`.docx`), trình biên dịch tự động phân tích và chuyển đổi các công thức LaTeX toán học sang ký hiệu Unicode tương ứng, đảm bảo tài liệu Word hiển thị đẹp mắt, đồng bộ font chữ mà không cần cài đặt thêm plugin Equation phức tạp trên Microsoft Office.
 
-### 4. ⚡ Kiến trúc Đa luồng Bất đồng bộ (Multi-threaded PyQt6 UI)
+### ⚡ 4. Kiến trúc Đa luồng Bất đồng bộ (Multi-threaded PyQt6 UI)
 * Mọi tác vụ nặng bao gồm: Phân tích cú pháp Markdown, render biểu đồ Mermaid sang ảnh, nạp tài liệu lớn đều được đẩy xuống luồng phụ thông qua `QThread` (`MarkdownParserThread`). Giao diện người dùng (UI) luôn phản hồi mượt mà ở tần số quét cao, triệt tiêu hoàn toàn hiện tượng đơ/lag ứng dụng.
 
-### 5. 🔍 Tìm kiếm nâng cao Notepad++ Style
+### 🔍 5. Tìm kiếm nâng cao Notepad++ Style
 * Hỗ trợ tìm kiếm từ khóa thời gian thực với tính năng **Multi-highlight** (bôi vàng đồng thời nhiều kết quả) trên cả bảng Soạn thảo (Editor) lẫn Xem thử (Viewer).
 * Tích hợp dock kết quả tìm kiếm Notepad++ style, hiển thị rõ số dòng và ngữ cảnh của từng kết quả, giúp duyệt tài liệu quy mô lớn cực nhanh.
 
