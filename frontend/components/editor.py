@@ -1,6 +1,7 @@
 # Tên file: frontend/components/editor.py
 # CHỨC NĂNG: Thành phần trình soạn thảo CodeEditor với cột số dòng LineNumberArea.
 # CHANGELOG:
+# - 10:05:00 08/07/2026: [UPDATE] Thêm phương thức insert_image_markup hỗ trợ chèn thẻ img HTML tại vị trí con trỏ (Antigravity)
 # - 09:53:00 08/07/2026: [FIX] Sửa lỗi click lệch dòng trên LineNumberArea bằng phương pháp tìm block theo tọa độ y vẽ (Antigravity)
 # - 09:50:00 08/07/2026: [NEW] Thêm tính năng click/drag chọn dòng và Ctrl+Click chọn nhiều dòng cách quãng kèm copy (Antigravity)
 # - 15:21:00 02/07/2026: [DOCS] Phủ Type Hints và hoàn thiện Google-style Docstrings cho toàn bộ các hàm vẽ/sự kiện (Antigravity)
@@ -435,3 +436,29 @@ class CodeEditor(QPlainTextEdit):
                 cursor = self.document().find(self.search_term, cursor)
 
         self.setExtraSelections(extraSelections)
+
+    def insert_image_markup(
+        self, image_url: str, alt_text: str, width: str, style_str: str
+    ) -> None:
+        """Chèn thẻ img HTML vào vị trí con trỏ hiện tại của editor.
+
+        Args:
+            image_url: Đường dẫn URL an toàn của file ảnh (file:///...).
+            alt_text: Chú thích thay thế của ảnh.
+            width: Chiều rộng hiển thị của ảnh (ví dụ: '380' hoặc '100%').
+            style_str: Chuỗi style CSS tùy chỉnh cho ảnh.
+        """
+        parts = [f"src='{image_url}'"]
+        if alt_text:
+            parts.append(f"alt='{alt_text}'")
+        if width:
+            parts.append(f"width='{width}'")
+        if style_str:
+            parts.append(f"style='{style_str}'")
+
+        img_markup = f"<img {' '.join(parts)} />"
+
+        cursor = self.textCursor()
+        cursor.insertText(img_markup)
+        self.setTextCursor(cursor)
+        self.setFocus()

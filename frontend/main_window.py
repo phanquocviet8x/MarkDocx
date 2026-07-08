@@ -1,5 +1,7 @@
 # Tên file: frontend/main_window.py
+# CHỨC NĂNG: Cửa sổ chính của ứng dụng Markdown Viewer tích hợp soạn thảo, xem thử và các công cụ xuất bản.
 # CHANGELOG:
+# - 10:10:00 08/07/2026: [UPDATE] Tích hợp InsertImageDialog, cấu hình Toolbar và phím tắt Ctrl+Shift+I để chèn ảnh (Antigravity)
 # - 12:35:00 06/07/2026: [FIX] Sửa lỗi hiển thị preview đối với tệp tin lớn bằng cách load từ file tạm (Antigravity)
 # - 15:18:00 02/07/2026: [REFACTOR] Tách các class phụ trợ sang frontend/components/ để giảm khớp nối (Modularity First) (Lê Thanh Vân/Antigravity)
 # - 15:08:00 02/07/2026: [REFACTOR] Phân rã _init_ui thành các helpers nhỏ, sửa triệt để 5 lỗi Silent Exceptions và tích hợp logging (Lê Thanh Vân/Antigravity)
@@ -40,6 +42,7 @@ from frontend.styles import get_full_css
 from frontend.components.parser_thread import MarkdownParserThread
 from frontend.components.editor import CodeEditor
 from frontend.components.search_panel import SearchResultPanel
+from frontend.components.image_dialog import InsertImageDialog
 
 logger = logging.getLogger(__name__)
 
@@ -173,6 +176,9 @@ class MainWindow(QMainWindow):
         QShortcut(QKeySequence("Ctrl+F"), self).activated.connect(
             self.show_search_panel
         )
+        QShortcut(QKeySequence("Ctrl+Shift+I"), self).activated.connect(
+            self.show_insert_image_dialog
+        )
         QShortcut(QKeySequence("Esc"), self).activated.connect(self.hide_search_panel)
 
         self.status_bar = QStatusBar()
@@ -200,6 +206,10 @@ class MainWindow(QMainWindow):
         save_act.setShortcut(QKeySequence("Ctrl+S"))
         save_act.triggered.connect(self.save_current_file)
         toolbar.addAction(save_act)
+
+        img_act = QAction("🖼️ Ảnh", self)
+        img_act.triggered.connect(self.show_insert_image_dialog)
+        toolbar.addAction(img_act)
 
         toolbar.addSeparator()
         self.theme_btn = QAction("🌙 Tối", self)
@@ -604,3 +614,12 @@ class MainWindow(QMainWindow):
 
     def on_error(self, e):
         QMessageBox.critical(self, "Lỗi", e)
+
+    def show_insert_image_dialog(self) -> None:
+        """Hiển thị hộp thoại chèn ảnh từ máy tính và thực hiện chèn HTML."""
+        dialog = InsertImageDialog(self, self.is_dark)
+        if dialog.exec() == InsertImageDialog.DialogCode.Accepted:
+            url, alt, width, style = dialog.get_image_data()
+            if url:
+                self.editor.insert_image_markup(url, alt, width, style)
+                self.status_bar.showMessage("Đã chèn ảnh thành công.", 3000)
